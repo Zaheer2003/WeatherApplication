@@ -52,7 +52,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.star),
+              icon: Icon(Icons.favorite),
               label: 'Favorites',
             ),
           ],

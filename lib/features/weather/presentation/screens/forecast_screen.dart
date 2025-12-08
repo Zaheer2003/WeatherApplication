@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
-import 'package:weatherapp/features/weather/domain/entities/weather_entity.dart'; // Add this import
+import '../../domain/entities/weather_entity.dart'; // Add this import
 import 'package:weatherapp/features/weather/presentation/providers/forecast_provider.dart';
 import 'package:weatherapp/widgets/glassmorphism.dart';
 
@@ -23,28 +24,27 @@ class _ForecastScreenState extends ConsumerState<ForecastScreen> {
     });
   }
 
-  IconData _getWeatherIcon(String description) {
+  String _getWeatherIcon(String description) {
     switch (description.toLowerCase()) {
       case 'clear sky':
-        return Icons.wb_sunny;
+        return 'assets/icons/clear-day.svg';
       case 'few clouds':
       case 'scattered clouds':
       case 'broken clouds':
-        return Icons.cloud;
+        return 'assets/icons/cloudy.svg';
       case 'shower rain':
-        return Icons.grain;
       case 'rain':
-        return Icons.umbrella;
+        return 'assets/icons/rain.svg';
       case 'thunderstorm':
-        return Icons.flash_on;
+        return 'assets/icons/thunderstorms-day.svg';
       case 'snow':
-        return Icons.ac_unit;
+        return 'assets/icons/snow.svg';
       case 'mist':
       case 'haze':
       case 'fog':
-        return Icons.foggy;
+        return 'assets/icons/haze.svg';
       default:
-        return Icons.cloud_off;
+        return 'assets/icons/cloudy.svg'; // Default to a general cloud icon
     }
   }
 
@@ -121,10 +121,12 @@ class _ForecastScreenState extends ConsumerState<ForecastScreen> {
                     height: 100,
                     child: Center(
                       child: ListTile(
-                        leading: Icon(
+                      leading: SvgPicture.asset(
                           _getWeatherIcon(commonDescription),
-                          color: Colors.white,
-                          size: 40,
+                          colorFilter:
+                              ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                          width: 40,
+                          height: 40,
                         ),
                         title: Text(
                           DateFormat('EEEE, MMM d').format(DateTime.parse(dateKey)),

@@ -28,10 +28,33 @@ class WeatherRepositoryImpl implements WeatherRepository {
   }
 
   @override
+  Future<Either<Failure, Map<String, double>>> getCoordinates(String city) async {
+    try {
+      final coordinates = await remoteDataSource.getCoordinates(city);
+      return Right(coordinates);
+    } on ServerException {
+      return Left(ServerFailure('Server Failure'));
+    } on DioException catch (e) {
+      return Left(ServerFailure(e.message ?? 'Dio Exception'));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<Failure, ForecastEntity>> getWeatherForecast(String city) async {
     try {
-      final remoteForecast = await remoteDataSource.getWeatherForecast(city);
-      return Right(ForecastModel(forecastList: remoteForecast));
+      final coordinatesResult = await getCoordinates(city);
+      return await coordinatesResult.fold(
+        (failure) => Left(failure),
+        (coordinates) async {
+          final remoteForecast = await remoteDataSource.getWeatherForecast(
+            coordinates['lat']!,
+            coordinates['lon']!,
+          );
+          return Right(ForecastModel(forecastList: remoteForecast));
+        },
+      );
     } on ServerException {
       return Left(ServerFailure('Server Failure'));
     } on DioException catch (e) {
