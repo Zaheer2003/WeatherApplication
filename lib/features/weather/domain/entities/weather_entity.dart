@@ -7,6 +7,7 @@ class WeatherEntity {
   final double tempMax;
   final int humidity;
   final double windSpeed;
+  final int dt; // Add this line
 
   WeatherEntity({
     required this.cityName,
@@ -17,5 +18,6 @@ class WeatherEntity {
     required this.tempMax,
     required this.humidity,
     required this.windSpeed,
+    required this.dt, // Add this line
   });
 }

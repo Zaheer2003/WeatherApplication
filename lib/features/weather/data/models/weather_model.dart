@@ -10,6 +10,7 @@ class WeatherModel extends WeatherEntity {
     required double tempMax,
     required int humidity,
     required double windSpeed,
+    required int dt, // Add this line
   }) : super(
           cityName: cityName,
           description: description,
@@ -19,11 +20,12 @@ class WeatherModel extends WeatherEntity {
           tempMax: tempMax,
           humidity: humidity,
           windSpeed: windSpeed,
+          dt: dt, // Add this line
         );
 
   factory WeatherModel.fromJson(Map<String, dynamic> json) {
     return WeatherModel(
-      cityName: json['name'],
+      cityName: json['name'] ?? '', // Handle potential null for current weather, forecast items have different structure
       description: json['weather'][0]['description'],
       temperature: json['main']['temp'].toDouble(),
       feelsLike: json['main']['feels_like'].toDouble(),
@@ -31,6 +33,7 @@ class WeatherModel extends WeatherEntity {
       tempMax: json['main']['temp_max'].toDouble(),
       humidity: json['main']['humidity'],
       windSpeed: json['wind']['speed'].toDouble(),
+      dt: json['dt'], // Add this line
     );
   }
 }
