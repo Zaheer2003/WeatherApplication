@@ -1,0 +1,1 @@
+I have clarified my capabilities regarding building an APK and asked for confirmation from the user. I will wait for their response.
