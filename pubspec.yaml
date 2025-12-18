@@ -1,78 +1,30 @@
 name: weatherapp
-description: "A new Flutter project."
+description: "A clean weather app with 7-day forecast and favorite cities"
 
-
-publish_to: 'none' 
+publish_to: 'none'
 
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.10.1
+  sdk: '>=2.17.0 <3.0.0'
 
 dependencies:
   flutter:
-    sdk: flutter 
-  cupertino_icons: ^1.0.8
-  flutter_riverpod: ^2.4.0
-  go_router: ^14.0.0
-  http: ^1.2.0
-  intl: ^0.20.2
-  shared_preferences: ^2.5.3
-  geolocator: ^14.0.2
-  geocoding: ^4.0.0
-  fl_chart: ^1.1.1
-  google_fonts: ^6.3.3
-  dio: ^5.4.3+1
-  lottie: ^3.1.2
-  flutter_dotenv: ^5.1.0
-  dartz: ^0.10.1
-  flutter_svg: any
-
- 
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  flutter_riverpod: ^2.0.0
+  http: ^0.13.5
+  geolocator: ^9.0.2
+  shared_preferences: ^2.0.15
+  equatable: ^2.0.3
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  
-  flutter_lints: ^6.0.0
-
+  flutter_lints: ^2.0.0
 
 flutter:
-
-  
   uses-material-design: true
   assets:
-    - .env
-    - assets/images/
-    - assets/icons/
-
-  
-  
-  
-  
-
-  
-  
-
-  
-  
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+    - assets/.env

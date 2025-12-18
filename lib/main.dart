@@ -1,47 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:weatherapp/features/weather/presentation/screens/home_screen.dart';
-import 'package:weatherapp/features/weather/presentation/screens/main_screen.dart';
+import 'presentation/screens/main_screen.dart';
+import 'presentation/providers/theme_provider.dart';
 
-void main() async {
-  await dotenv.load();
-  runApp(const ProviderScope(child: MyApp()));
+void main() {
+  runApp(const ProviderScope(child: WeatherApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class WeatherApp extends ConsumerWidget {
+  const WeatherApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final textTheme = GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
-        .apply(bodyColor: Colors.white, displayColor: Colors.white);
-
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeProvider);
+    
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: 'Weather App',
+      debugShowCheckedModeBanner: false,
+      themeMode: themeMode,
       theme: ThemeData(
-        primarySwatch: Colors.orange,
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF6366F1),
+          brightness: Brightness.light,
+        ),
+        cardTheme: const CardThemeData(
+          elevation: 0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+        ),
         appBarTheme: const AppBarTheme(
-          foregroundColor: Colors.white, // Ensures title and icon colors are white
+          centerTitle: true,
+          elevation: 0,
         ),
-        textTheme: textTheme,
-        inputDecorationTheme: InputDecorationTheme(
-          filled: true,
-          fillColor: Colors.blueGrey.withOpacity(0.1),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
-            borderSide: BorderSide.none,
-          ),
-          labelStyle: const TextStyle(color: Colors.white70),
+      ),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF6366F1),
+          brightness: Brightness.dark,
         ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.orange,
-            shape: const StadiumBorder(),
-            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-          ),
+        cardTheme: const CardThemeData(
+          elevation: 0,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+        ),
+        appBarTheme: const AppBarTheme(
+          centerTitle: true,
+          elevation: 0,
         ),
       ),
       home: const MainScreen(),
