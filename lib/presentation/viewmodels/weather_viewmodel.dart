@@ -93,14 +93,12 @@ class WeatherViewModel extends StateNotifier<WeatherState> {
   }
 
   Future<void> addToFavorites(City city) async {
-    // Check if city is already in favorites
     if (state.favorites.any((c) => c.name == city.name && c.country == city.country)) {
-      return; // Don't add duplicates
+      return; 
     }
     final newFavorites = [...state.favorites, city];
     await _favoritesStorage.saveFavorites(newFavorites);
     state = state.copyWith(favorites: newFavorites);
-    // Reload favorites to ensure consistency
     await loadFavorites();
   }
 
@@ -108,7 +106,6 @@ class WeatherViewModel extends StateNotifier<WeatherState> {
     final newFavorites = state.favorites.where((c) => c.name != city.name || c.country != city.country).toList();
     await _favoritesStorage.saveFavorites(newFavorites);
     state = state.copyWith(favorites: newFavorites);
-    // Reload favorites to ensure consistency
     await loadFavorites();
   }
 
